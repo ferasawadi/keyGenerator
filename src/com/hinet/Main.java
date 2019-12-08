@@ -23,6 +23,7 @@ public class Main extends Application {
 
 	@FXML
 	public JFXButton clear_btn, generate_btn;
+
 	@FXML
 	public JFXTextField customer_sn, activation_sn, licence_to;
 	EncyptSN encyptSN = new EncyptSN();
@@ -34,7 +35,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-		primaryStage.setTitle("Harvest Key Generator");
+		primaryStage.setTitle("Key Generator");
 		Scene scene = new Scene(root, 450, 390);
 		primaryStage.setScene(scene);
 		primaryStage.setScene(scene);
@@ -48,9 +49,9 @@ public class Main extends Application {
 	@FXML
 	public void generateSN() throws NoSuchAlgorithmException {
 
-		String SN = customer_sn.getText();
-		SN = encyptSN.EditSerialNumber(SN);
-		encyptSN.setDeviceSN(SN);
+		String serial = customer_sn.getText();
+		serial = encyptSN.EditSerialNumber(serial);
+		encyptSN.setDeviceSN(serial);
 		String result = encyptSN.getDeviceSN();
 		activation_sn.setText(result);
 
@@ -89,21 +90,19 @@ public class Main extends Application {
 
 	@FXML
 	public void Exit() {
+
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
 		alert.setTitle("Closing  Confirmation ");
 		alert.setHeaderText("Look, you're going to close the App");
 		alert.setContentText("Are you ok with this?");
 
 		Optional<ButtonType> result = alert.showAndWait();
+
 		if (result.get() == ButtonType.OK) {
 			// ... user chose OK
-
 			Platform.exit();
-		} else {
-			// ... user chose CANCEL or closed the dialog
-			;
 		}
-
 	}
 }
 

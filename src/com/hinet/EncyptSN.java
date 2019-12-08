@@ -6,6 +6,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -30,12 +31,10 @@ public class EncyptSN {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public String getDeviceSN() throws NoSuchAlgorithmException {
 		return encrypt(DeviceSN);
-
 	}
 
 	public void setDeviceSN(String deviceSN) {
@@ -63,8 +62,7 @@ public class EncyptSN {
 
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
-			encodedSN = Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-//            String encodedSN= Base64..encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+			encodedSN = Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
 			StringBuilder str = new StringBuilder(encodedSN);
 			int idx = str.length() - 4;
 			while (idx > 0) {
@@ -81,13 +79,9 @@ public class EncyptSN {
 	public String EditSerialNumber(String finalSN) {
 		String SN = finalSN;
 		String reverse = "";
-
 		try {
-
 			while (!finalSN.isEmpty()) {
-				System.out.println("Serial Num:" + SN);
 				SN += SN;
-//            System.out.println("s: "+SN);
 				for (int i = SN.length() - 1; i >= 0; i--) {
 					reverse = reverse + SN.charAt(i);
 				}
